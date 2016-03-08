@@ -1,5 +1,7 @@
 import {List, Map} from 'immutable'
 
+export const INITIAL_STATE = Map()
+
 export function setEntries(state, entries) {
   return state.set('entries', List(entries))
 }
@@ -24,6 +26,13 @@ function getWinners(vote) {
 export function next(state) {
   const entries = state.get('entries')
     .concat(getWinners((state.get('vote')))) //Get the entries, and add on the winners
+
+  // Check if there is only one entry left. If so make it the winner.
+  if (entries.size === 1) {
+    return state.remove('vote')
+                .remove('entries')
+                .set('winner', entries.first())
+  }
 
   // Merge will overwrite the previous entries. It is a shallow (?) merge.
   return state.merge({
