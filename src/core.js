@@ -41,15 +41,15 @@ export function next(state) {
   })
 }
 
-export function vote(state, entry) {
+export function vote(voteState, entry) {
   // Explanation
-  // From state go state.vote.tally.<entry>
+  // From state go state.tally.<entry>
   // default to 0 if nothing is found
   // Then run the function and update that prop to the result
   // return everything
   // see https://facebook.github.io/immutable-js/docs/#/Map/updateIn & http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html (Find: Using updateIn makes this pleasingly succinct.)
-  return state.updateIn(
-    ['vote','tally', entry],
+  return voteState.updateIn(
+    ['tally', entry],
     0,
     (tally) => tally + 1
   )
